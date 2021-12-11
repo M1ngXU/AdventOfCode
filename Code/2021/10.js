@@ -1,5 +1,5 @@
-module.exports = example => {
-	const input = require('./../../Input/Parser.js').parse_file(2021, 10, example).split('\n').map(v => v.split(''));
+module.exports = input_data => {
+	const input = require('./../../Input/Parser.js').string_array(input_data);
 	var result = input.map(i => {
 		var r = [];
 		var e = [];

@@ -39,9 +39,31 @@ class Matrix {
 			points.push(getElement(x, y));
 			x += vector.direction.x;
 			y += vector.direction.y;
-		} while (x <= (vector.end.x || width) && y <= (vector.end.y || height));
+		} while (x <= (vector.end.x || this.width) && y <= (vector.end.y || this.height));
 		return points.filter(e => e !== null);
   }
+
+	toString(length_per_value) {
+		if (!length_per_value) length_per_value = this.values.reduce((a, b) => a > ('' + b).length ? a : ('' + b).length, 0) + 1;
+		var result = '';
+		for (var y = 0; y < this.height; y++) {
+			if (y > 0) result += '\n';
+			for (var x = 0; x < this.width; x++) {
+				var e = '' + this.getElement(x, y, { default: '﹖', value_only: true });
+				if (e.length < length_per_value) {
+					while (e.length < length_per_value) {
+						e += ' ';
+					}
+				}
+				result += e;
+			}
+		}
+		return result;
+	}
+
+	get values() {
+		return this.matrix.map(e => e.value);
+	}
 }
 module.exports = Matrix;
 
@@ -57,7 +79,7 @@ class MatrixElement {
     var adjacentCells = [];
     for (var x = -1; x <= 1; x++) {
       for (var y = -1; y <= 1; y++) {
-        if (options.diagonal || (x === 0 || y === 0) && (x !== 0 || y !== 0)) {
+        if (options.diagonal || ((x === 0 || y === 0) && (x !== 0 || y !== 0))) {
           adjacentCells.push(
 						this.matrix.getElement(
 							this.coordinates.x + x,
