@@ -1,17 +1,35 @@
 const Vector = require('./Vector.js');
+const Number_Array = require('./Number_Array.js');
 
 class Matrix {
   constructor(array) {
-    this.matrix = array.flatMap((a, y) =>
-				a.flatMap((v, x) => new MatrixElement(x, y, v, this)));
 		this.height = array.length;
 		this.width = array[0].length;
+		this.array = array;
+    this.matrix = array.flatMap((a, y) =>
+			a.map((v, x) => {
+				var n = new MatrixElement(x, y, v, this);
+				this.array[y][x] = n;
+				return n;
+			}));
   }
+
+	static getEmptyMatrix(width, height, default_value) {
+		return new Matrix(Array.from(
+			new Array(height),
+			() => Array.from(new Array(width), () => default_value)
+		));
+	}
 
   getElement(x, y, options) {
     if (!options) options = {};
-    var e = this.matrix.find(m => m.coordinates.x === x && m.coordinates.y === y);
-    if (!e) {
+		var e;
+		if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
+			e = this.array[y][x];
+		} else {
+			if (options.search_elements) e = this.matrix.find(m => m.coordinates.x === x && m.coordinates.y === y);
+		}
+    if (e === undefined) {
       if (options.default !== null) {
         return new MatrixElement(x, y, options.default, this);
       }
@@ -33,18 +51,41 @@ class Matrix {
   getLine(vector, options) {
     if (!options) options = {};
 		var points = [];
-		var x = vector.pos.x;
-		var y = vector.pos.y;
-		do {
-			points.push(getElement(x, y));
+		var x = vector.pos.x - vector.direction.x;
+		var y = vector.pos.y - vector.direction.y;
+		var fnReachedEndX;
+		if (vector.pos.x > vector.end.x) {
+			fnReachedEndX = () => x <= (vector.end.x || 0)
+		} else {
+			fnReachedEndX = () => x >= (vector.end.x || this.width)
+		}
+		var fnReachedEndY;
+		if (vector.pos.y > vector.end.y) {
+			fnReachedEndY = () => y <= (vector.end.y || 0)
+		} else {
+			fnReachedEndY = () => y >= (vector.end.y || this.height)
+		}
+		while (!fnReachedEndX() || !fnReachedEndY()) {
 			x += vector.direction.x;
 			y += vector.direction.y;
-		} while (x <= (vector.end.x || this.width) && y <= (vector.end.y || this.height));
+			points.push(this.getElement(x, y, options));
+		}
 		return points.filter(e => e !== null);
   }
 
+	get values() {
+		return new Number_Array(this.matrix.map(m => m.value));
+	}
+
+	clone() {
+		var m =  Matrix.getEmptyMatrix(this.width, this.height);
+		this.matrix.forEach(e => m.getElement(e.coordinates.x, e.coordinates.y).value = e.value);
+		return m;
+	}
+	
 	toString(length_per_value) {
-		if (!length_per_value) length_per_value = this.values.reduce((a, b) => a > ('' + b).length ? a : ('' + b).length, 0) + 1;
+		if (!length_per_value)
+			length_per_value = this.array.flat().reduce((a, b) => a > ('' + b.value).length ? a : ('' + b.value).length, 0) + 1;
 		var result = '';
 		for (var y = 0; y < this.height; y++) {
 			if (y > 0) result += '\n';
@@ -59,10 +100,6 @@ class Matrix {
 			}
 		}
 		return result;
-	}
-
-	get values() {
-		return this.matrix.map(e => e.value);
 	}
 }
 module.exports = Matrix;

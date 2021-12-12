@@ -8,6 +8,14 @@ class Number_Array {
 		} else {
 			this.array = array;
 		}
+		
+		[
+			'filter',
+			'map',
+			'flatmap'
+		].forEach(f => {
+			this[f] = fn => new Number_Array(this.elements[f]((e, i) => fn(e.number, i, e.real_index)));
+		})
   }
 
 	add(i, amount) {
@@ -55,8 +63,8 @@ class Number_Array {
 		return this.array.length;
 	}
 
-	get numbers() {
-		return this.array.map(a => a.number);
+	get max() {
+		return this.numbers.reduce((a, b) => a > b ? a : b, Number.NEGATIVE_INFINITY);
 	}
 
 	get med() {
@@ -65,7 +73,15 @@ class Number_Array {
 			var b = this.asc.getNumberAt(this.length / 2 - 1);
 			return (a + b) / 2;
 		}
-		return this.getNumberAt((this.length - 1) / 2);
+		return this.asc.getNumberAt((this.length - 1) / 2);
+	}
+
+	get min() {
+		return this.numbers.reduce((a, b) => a < b ? a : b, Number.POSITIVE_INFINITY);
+	}
+
+	get numbers() {
+		return this.array.map(a => a.number);
 	}
 
 	get prod() {

@@ -19,6 +19,5 @@ module.exports = input_data => {
 		if (!input.matrix.find(e => e.value > 0)) step_to_flash = j;
 		if (j < 100) flashes += input.matrix.filter(i => i.value === 0).length;
 	}
-	console.log(input.toString());
 	return [ flashes, step_to_flash + 1 ]
 }

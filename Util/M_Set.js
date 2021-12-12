@@ -1,8 +1,8 @@
 class M_Set {
-  constructor(...elements) {
-    if (typeof elements !== 'array' && typeof elements !== 'object') elements = [];
+  constructor(...arr) {
+    if (typeof arr !== 'array' && typeof arr !== 'object') arr = [];
     this.elements = [];
-    elements.flat().forEach(c => this.add(c));
+    arr.flat(99).forEach(c => this.add(c));
   }
 
   exists(element) {

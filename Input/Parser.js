@@ -23,7 +23,7 @@ module.exports = {
 		if (typeof options !== 'object') options = {};
 		if (typeof options.new_line !== 'string') options.new_line = '\n';
 		if (typeof options.general_sep !== 'string') options.general_sep = ' ';
-		var fnSplitInline = r => r.split(options.general_sep);
+		var fnSplitInline = r => r.split(options.general_sep).map(r => options.parse_float ? parseFloat(r) : r);
 		var result = input_data.split(options.new_line);
 		if (typeof options.inline_sep === 'string')
 			return result.map(r => r.split(options.inline_sep).map(fnSplitInline));
