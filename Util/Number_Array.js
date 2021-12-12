@@ -39,6 +39,10 @@ class Number_Array {
 		return new Number_Array(this.elements.sort(Sort.DescendingKey('number')));
 	}
 
+	get delta() {
+		return new Number_Array(this.elements.slice(1).map((e, i) => e.number - this.elements[i].number));
+	}
+
 	get first() {
 		return this.getNumberAt(0);
 	}
