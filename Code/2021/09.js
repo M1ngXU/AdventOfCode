@@ -1,8 +1,7 @@
 const Sort = require('./../../Util/Sort.js');
 
 module.exports = input_data => {
-	const input = require('./../../Input/Parser.js').matrix(input_data);
-	var lowPoints = input.matrix.filter(m =>
+	var lowPoints = require('./../../Input/Parser.js').matrix(input_data).elements.filter(m =>
 		m.getAdjacent().find(v => v <= m.value) === undefined
 	);
 	return [

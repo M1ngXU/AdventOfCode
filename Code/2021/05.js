@@ -1,5 +1,4 @@
 const Matrix = require('./../../Util/Matrix.js');
-const Number_Array = require('./../../Util/Number_Array.js');
 const Vector = require('./../../Util/Vector.js');
 
 module.exports = input_data => {
@@ -9,11 +8,7 @@ module.exports = input_data => {
 		inline_sep: ' -> ',
 		parse_float: true
 	}).forEach(i => i[0][0] === i[1][0] || i[0][1] === i[1][1] ? input.unshift(i) : input.push(i));
-
-	var size = { x: 0, y: 0 };
-	Object.keys(size).forEach((k, j) => size[k] = new Number_Array(input.flatMap(v => v.flatMap(i => i[j]))).max);
-
-	var matrix = Matrix.getEmptyMatrix(size.x + 1, size.y + 1, 0);
+	var matrix = new Matrix({ default_value: 0 });
 	var result = [];
 	var fnPushResult = () => result.push(matrix.values.filter(v => v >= 2).length);
 	

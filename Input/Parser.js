@@ -14,10 +14,11 @@ module.exports = {
 		if (typeof options !== 'object') options = {};
 		if (typeof options.new_row !== 'string') options.new_row = '\n';
 		if (typeof options.cell_sep !== 'string') options.cell_sep = '';
-		return new Matrix(
-			input_data.split(options.new_row)
-			.map(v => v.split(options.cell_sep).map(w => parseInt(w)))
-		);
+		return new Matrix({
+			default_value: options.default_value,
+			start_arr: input_data.split(options.new_row)
+				.map(v => v.split(options.cell_sep).map(w => parseInt(w)))
+		});
 	},
 	string_array: (input_data, options) => {
 		if (typeof options !== 'object') options = {};
