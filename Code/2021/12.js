@@ -1,9 +1,9 @@
-const Graph = require('./../../Util/Graph.js');
+import { Graph, Parser } from './../../API.js';
 
-module.exports = input_data => {
+export function execute(input_data) {
 	var graph = new Graph();
 
-	require('./../../Input/Parser.js').string_array(input_data, {
+	Parser.string_array(input_data, {
 		general_sep: '-'
 	}).forEach(i => {
 		if (i[1] !== 'start' && i[0] !== 'end') graph.add_edge(i[0], i[1]);

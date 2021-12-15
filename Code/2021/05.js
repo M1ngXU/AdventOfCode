@@ -1,9 +1,8 @@
-const Matrix = require('./../../Util/Matrix.js');
-const Vector = require('./../../Util/Vector.js');
+import { Matrix, Vector, Parser } from './../../API.js';
 
-module.exports = input_data => {
+export function execute(input_data) {
 	var input = [];
-	require('./../../Input/Parser.js').string_array(input_data, {
+	Parser.string_array(input_data, {
 		general_sep: ',',
 		inline_sep: ' -> ',
 		parse_float: true

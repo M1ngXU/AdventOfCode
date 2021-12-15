@@ -1,5 +1,7 @@
-module.exports = input_data => {
-	const matrix = require('./../../Input/Parser.js').matrix(input_data);
+import { Parser } from './../../API.js';
+
+export function execute(input_data) {
+	const matrix = Parser.matrix(input_data);
 
 	var step_to_flash = -1;
 	var flashes = 0;

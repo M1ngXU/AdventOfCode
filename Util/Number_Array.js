@@ -1,6 +1,6 @@
-const Sort = require('./../Util/Sort.js');
+import Sort from './Sort.js';
 
-class Number_Array {
+export default class Number_Array {
   constructor(array) {
     this.array = [];
 		if (typeof array[0] !== 'object') {
@@ -96,4 +96,3 @@ class Number_Array {
 		return this.numbers.reduce((a, b) => a + b, 0);
 	}
 }
-module.exports = Number_Array;

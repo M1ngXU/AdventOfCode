@@ -1,5 +1,7 @@
-module.exports = input_data => {
-	var input = require('./../../Input/Parser.js').number_array(input_data, {
+import { Parser } from './../../API.js';
+
+export function execute(input_data) {
+	var input = Parser.number_array(input_data, {
 		sep: '\n'
 	});
 	return [

@@ -1,10 +1,10 @@
-const fs = require('fs');
-const Matrix = require('./../Util/Matrix.js');
-const Number_Array = require('./../Util/Number_Array.js');
+import fs from 'fs';
+import Matrix from './../Util/Matrix.js';
+import Number_Array from './../Util/Number_Array.js';
 
-module.exports = {
+export default {
 	parse_file: (year, day, use_example) => fs.readFileSync(
-		__dirname + '/'
+		'./Input/'
 		+ (use_example ? 'Example' : 'Exercise')
 		+ '/' + year
 		+ '/' + day

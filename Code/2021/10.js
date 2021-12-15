@@ -1,4 +1,5 @@
-const Number_Array = require('./../../Util/Number_Array.js');
+import { Number_Array } from './../../API.js';
+
 const brackets = {
 	'(': ')',
 	'[': ']',
@@ -12,7 +13,7 @@ const corrupted_cost = {
 	'>': 25137
 }
 
-module.exports = input_data => {
+export function execute(input_data) {
 	var global_corrupted = [];
 	var global_incomplete = [];
 

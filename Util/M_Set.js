@@ -1,4 +1,4 @@
-class M_Set {
+export default class M_Set {
   constructor(...arr) {
     if (typeof arr !== 'array' && typeof arr !== 'object') arr = [];
     this.elements = [];
@@ -46,4 +46,3 @@ class M_Set {
 		return this.elements.length;
 	}
 }
-module.exports = M_Set;

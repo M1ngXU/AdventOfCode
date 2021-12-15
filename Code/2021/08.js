@@ -1,7 +1,7 @@
-const M_Set = require('./../../Util/M_Set.js');
+import { M_Set, Parser } from './../../API.js';
 
-module.exports = input_data => {
-	const input = require('./../../Input/Parser.js').string_array(input_data, {
+export function execute(input_data) {
+	const input = Parser.string_array(input_data, {
 		inline_sep: ' | '
 	});
 	var result = input.map(i => {

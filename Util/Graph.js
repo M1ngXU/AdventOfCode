@@ -1,4 +1,4 @@
-class Graph {
+export default class Graph {
   constructor() {
 		this.edges = {};
   }
@@ -23,4 +23,3 @@ class Graph {
 		return result;
 	}
 }
-module.exports = Graph;

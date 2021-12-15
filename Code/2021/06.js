@@ -1,5 +1,7 @@
-module.exports = input_data => {
-	const fish = require('./../../Input/Parser.js').number_array2(input_data, 9);
+import { Parser } from './../../API.js';
+
+export function execute(input_data) {
+	const fish = Parser.number_array2(input_data, 9);
 
 	var result = [];
 

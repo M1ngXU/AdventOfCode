@@ -1,8 +1,8 @@
 const SPACE_BTW_CHAR = 1;
 
-const Matrix = require('./../../Util/Matrix.js');
+import { Matrix } from './../../API.js';
 
-module.exports = input_data => {
+export function execute(input_data) {
 	var input = input_data.split('\n\n');
 	var m = input[0].split('\n').map(v => v.split(',').map(v => parseInt(v)));
 	var f = input[1].split('\n').map(v => v.split('along ')[1].split('='));

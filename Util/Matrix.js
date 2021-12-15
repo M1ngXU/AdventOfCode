@@ -1,7 +1,7 @@
-const Vector = require('./Vector.js');
-const Number_Array = require('./Number_Array.js');
+import Vector from './Vector.js';
+import Number_Array from './Number_Array.js';
 
-class Matrix {
+export default class Matrix {
   constructor(options) {
 		if (typeof options !== 'object') options = {};
 		this.matrix = {};
@@ -128,7 +128,6 @@ class Matrix {
 		return result;
 	}
 }
-module.exports = Matrix;
 
 class MatrixElement {
   constructor(x, y, value, matrix) {

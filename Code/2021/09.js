@@ -1,7 +1,7 @@
-const Sort = require('./../../Util/Sort.js');
+import { Sort, Parser } from './../../API.js';
 
-module.exports = input_data => {
-	var lowPoints = require('./../../Input/Parser.js').matrix(input_data).elements.filter(m =>
+export function execute(input_data) {
+	var lowPoints = Parser.matrix(input_data).elements.filter(m =>
 		m.getAdjacent().find(v => v <= m.value) === undefined
 	);
 	return [
