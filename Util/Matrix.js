@@ -104,6 +104,10 @@ export default class Matrix {
 		return points.filter(e => e !== null);
   }
 
+  get length() {
+	  return this.elements.length;
+  }
+  
 	get values() {
 		return new Number_Array(this.elements.map(m => m.value));
 	}

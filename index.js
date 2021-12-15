@@ -13,4 +13,4 @@ import fs from 'fs';
 	}
 	console.log('\x1b[32mTotal time:', '\x1b[31m' + (Date.now() - t) + 'ms');
 })();
-//runner(2021,5);
+//runner(2021,15);

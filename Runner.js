@@ -1,6 +1,6 @@
 import Parser from './Input/Parser.js';
 
-var execute = async (year, day, use_example) => (await import('./Code/' + year + '/' + day + '.js'))
+var execute = async (year, day, use_example) => (await import('./Code/' + year + '/' + (typeof day === 'number' && day < 10 ? '0' : '') + day + '.js'))
 	.execute(Parser.parse_file(year, day, use_example));
 
 var run = async (year, day, use_example) => {
