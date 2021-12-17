@@ -7,9 +7,9 @@ const FILE_TO_INPUT = './Input/';
 const EXERCISE = 'Exercise/';
 const EXAMPLE = 'Example/';
 
-const year = 2020;
-const day = '08';
-const result = 8;
+const year = 2021;
+const day = '17';
+const result = 112;
 
 (async () => {
 	var file_to_exercise = FILE_TO_INPUT + EXERCISE + year + '/' + day + '.input';
@@ -30,7 +30,6 @@ const result = 8;
 		} catch {
 			var input = await fetch('https://www.adventofcode.com/' + year + '/day/' + parseInt(day));
 			input = await input.text();
-			console.log(input);
 			fs.writeFileSync(file_to_example, decode(input.match(/<pre><code>(.+?)<\/code><\/pre>/s)[1].slice(0, -1)));
 		} finally {
 			var r = await execute(year, day, true);

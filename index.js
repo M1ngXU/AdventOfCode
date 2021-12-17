@@ -1,6 +1,6 @@
 import runner from './Runner.js';
 import fs from 'fs';
-
+/*
 (async () => {
 	var t = Date.now();
 	var years = fs.readdirSync('Code');
@@ -12,5 +12,5 @@ import fs from 'fs';
 		};
 	}
 	console.log('\x1b[32mTotal time:', '\x1b[31m' + (Date.now() - t) + 'ms');
-})();
-//runner(2021,15);
+})();*/
+runner(2021,16);
