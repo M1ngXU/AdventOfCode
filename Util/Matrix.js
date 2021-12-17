@@ -16,7 +16,7 @@ export default class Matrix {
 			this.height = 0;
 		}
   }
-
+  
 	get elements() {
 		return Object.keys(this.matrix).flatMap(k => Object.values(this.matrix[k]));
 	}
@@ -76,7 +76,7 @@ export default class Matrix {
   
   getColumn(x, options) {
 		if (typeof options !== 'object') options = {};
-    return getLine(new Vector({ x: x, y: 0}, { x: 0, y: 1 }, { x: 0, y: options.length || height }));
+    return this.getLine(new Vector({ x: x, y: 0}, { x: 0, y: 1 }, { x: x }), options);
   }
   
   getLine(vector, options) {
@@ -86,22 +86,22 @@ export default class Matrix {
 		var y = vector.pos.y - vector.direction.y;
 		var fnReachedEndX;
 		if (vector.pos.x > vector.end.x) {
-			fnReachedEndX = () => x <= (vector.end.x || 0)
+			fnReachedEndX = () => x <= (vector.end.x || 0);
 		} else {
-			fnReachedEndX = () => x >= (vector.end.x || this.width)
+			fnReachedEndX = () => x >= (Number.isFinite(vector.end.x) ? vector.end.x : this.width);
 		}
 		var fnReachedEndY;
 		if (vector.pos.y > vector.end.y) {
-			fnReachedEndY = () => y <= (vector.end.y || 0)
+			fnReachedEndY = () => y <= (vector.end.y || 0);
 		} else {
-			fnReachedEndY = () => y >= (vector.end.y || this.height)
+			fnReachedEndY = () => y >= (Number.isFinite(vector.end.y) ? vector.end.y : this.height);
 		}
 		while (!fnReachedEndX() || !fnReachedEndY()) {
 			x += vector.direction.x;
 			y += vector.direction.y;
 			points.push(this.getElement(x, y, options));
 		}
-		return points.filter(e => e !== null);
+		return points.filter(e => e !== null && e !== undefined);
   }
 
   get length() {
