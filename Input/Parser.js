@@ -17,7 +17,7 @@ export default {
 		return new Matrix({
 			default_value: options.default_value,
 			start_arr: input_data.split(options.new_row)
-				.map(v => v.split(options.cell_sep).map(w => parseInt(w)))
+				.map(v => v.split(options.cell_sep).filter(v => v.length > 0).map(w => parseInt(w)))
 		});
 	},
 	string_array: (input_data, options) => {

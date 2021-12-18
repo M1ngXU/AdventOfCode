@@ -1,6 +1,6 @@
 import run, { execute, download, submit } from './ExerciseHelper.js';
 import fs from 'fs';
-
+/*
 (async () => {
 	var t = Date.now();
 	var years = fs.readdirSync('Code');
@@ -13,8 +13,8 @@ import fs from 'fs';
 		};
 	}
 	console.log('\x1b[32mTotal time:', '\x1b[31m' + (Date.now() - t) + 'ms');
-})();
-//runner(2021,16);
+})();*/
+run(2021,18);
 /*(async () => {
 	var t = Date.now();
 	var years = fs.readdirSync('Code');

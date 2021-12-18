@@ -7,8 +7,8 @@ const EXERCISE = 'Exercise/';
 const EXAMPLE = 'Example/';
 
 const year = 2021;
-const day = '03';
-const result = 230;
+const day = '04';
+const result = 1924;
 
 (async () => {
 	var file_to_exercise = FILE_TO_INPUT + EXERCISE + year + '/' + day + '.input';

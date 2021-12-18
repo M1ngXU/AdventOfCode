@@ -2,7 +2,7 @@ import Vector from './Vector.js';
 import Number_Array from './Number_Array.js';
 
 export default class Matrix {
-  constructor(options) {
+	constructor(options) {
 		if (typeof options !== 'object') options = {};
 		this.matrix = {};
 		this.default_value = options.default_value;
@@ -15,8 +15,12 @@ export default class Matrix {
 			this.width = 0;
 			this.height = 0;
 		}
-  }
-  
+	}
+
+	replace_value(value, new_value) {
+		this.elements.filter(e => e.value === value).forEach(e => e.value = new_value);
+	}
+
 	get elements() {
 		return Object.keys(this.matrix).flatMap(k => Object.values(this.matrix[k]));
 	}
@@ -25,7 +29,7 @@ export default class Matrix {
 		this.width = width;
 		Object.keys(this.matrix).forEach(k => Object.keys(this.matrix[k]).filter(k => k > width).forEach(kk => delete this.matrix[k][kk]));
 	}
-	
+
 	set_height(height) {
 		this.height = height;
 		Object.keys(this.matrix).filter(k => k > height).forEach(k => delete this.matrix[k]);
@@ -43,7 +47,7 @@ export default class Matrix {
 		this.getElement(x, y, options).value = value;
 	}
 
-  getElement(x, y, options) {
+	getElement(x, y, options) {
 		if (typeof options !== 'object') options = {};
 		var def_val = options.default_value ? options.default_value : this.default_value;
 		if (x < 0 || y < 0 || (this.fixed_size && (x >= this.width || y >= this.height))) return def_val;
@@ -55,7 +59,7 @@ export default class Matrix {
 				return def_val;
 			}
 		}
-    if (!e) {
+		if (!e) {
 			if (x > this.width) this.width = x + 1;
 			if (y > this.height) this.height = y + 1;
 			if (!options.no_creation) {
@@ -65,21 +69,21 @@ export default class Matrix {
 			} else {
 				return def_val;
 			}
-    }
-    return options.value_only ? e.value : e;
-  }
-  
-  getRow(y, options) {
+		}
+		return options.value_only ? e.value : e;
+	}
+
+	getRow(y, options) {
 		if (typeof options !== 'object') options = {};
-    return getLine(new Vector({ x: 0, y: y}, { x: 1, y: 0 }, { x: options.length || width, y: 0 }));
-  }
-  
-  getColumn(x, options) {
+		return this.getLine(new Vector({ x: 0, y: y }, { x: 1, y: 0 }, { y: y }), options);
+	}
+
+	getColumn(x, options) {
 		if (typeof options !== 'object') options = {};
-    return this.getLine(new Vector({ x: x, y: 0}, { x: 0, y: 1 }, { x: x }), options);
-  }
-  
-  getLine(vector, options) {
+		return this.getLine(new Vector({ x: x, y: 0}, { x: 0, y: 1 }, { x: x }), options);
+	}
+
+	getLine(vector, options) {
 		if (typeof options !== 'object') options = {};
 		var points = [];
 		var x = vector.pos.x - vector.direction.x;
@@ -102,16 +106,16 @@ export default class Matrix {
 			points.push(this.getElement(x, y, options));
 		}
 		return points.filter(e => e !== null && e !== undefined);
-  }
+	}
 
-  get length() {
-	  return this.elements.length;
-  }
-  
+	get length() {
+		return this.elements.length;
+	}
+
 	get values() {
 		return new Number_Array(this.elements.map(m => m.value));
 	}
-	
+
 	toString(options) {
 		if (typeof options !== 'object') options = {};
 		if (!options.length_per_value)
@@ -134,36 +138,36 @@ export default class Matrix {
 }
 
 class MatrixElement {
-  constructor(x, y, value, matrix) {
-    this.coordinates = { x: x, y: y };
-    this.value = value;
-    this.matrix = matrix;
+	constructor(x, y, value, matrix) {
+		this.coordinates = { x: x, y: y };
+		this.value = value;
+		this.matrix = matrix;
 	}
 
-  getAdjacent(options) {
-    if (!options) options = {};
-    var adjacentCells = [];
-    for (var x = -1; x <= 1; x++) {
-      for (var y = -1; y <= 1; y++) {
-        if (options.diagonal || ((x === 0 || y === 0) && (x !== 0 || y !== 0))) {
-          adjacentCells.push(
-						this.matrix.getElement(
-							this.coordinates.x + x,
-							this.coordinates.y + y
-						)
+	getAdjacent(options) {
+		if (!options) options = {};
+		var adjacentCells = [];
+		for (var x = -1; x <= 1; x++) {
+			for (var y = -1; y <= 1; y++) {
+				if (options.diagonal || ((x === 0 || y === 0) && (x !== 0 || y !== 0))) {
+					adjacentCells.push(
+							this.matrix.getElement(
+									this.coordinates.x + x,
+									this.coordinates.y + y
+							)
 					);
-        }
-      }
-    }
-    return adjacentCells
-			.filter(e => {
-				if (e === null || e === undefined || e.value === null || e.value === undefined) return false;
-				if (options.not) return e.value !== options.not;
-				return true;
-			})
-			.map(e => {
-				if (options.set_value) e.value = options.set_value;
-				return options.full_element ? e : e.value;
-			});
-  }
+				}
+			}
+		}
+		return adjacentCells
+		.filter(e => {
+			if (e === null || e === undefined || e.value === null || e.value === undefined) return false;
+			if (options.not) return e.value !== options.not;
+			return true;
+		})
+		.map(e => {
+			if (options.set_value) e.value = options.set_value;
+			return options.full_element ? e : e.value;
+		});
+	}
 }
