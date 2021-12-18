@@ -1,10 +1,10 @@
 class Node {
-	constructor(content, parent, is_right) {
+	constructor(content, parent) {
 		if (content === undefined) return;
 		this._parent = parent;
 		if (typeof content === 'number') return this._value = content;
-		this._left = new Node(content[0], this, false);
-		this._right = new Node(content[1], this, true);
+		this._left = new Node(content[0], this);
+		this._right = new Node(content[1], this);
 	}
 
 	get is_right() {
@@ -91,8 +91,8 @@ class Node {
 		if (this.value < 10) {
 			return !!this.left?.split() || !!this.right?.split();
 		}
-		this._left = new Node(Math.floor(this.value / 2), this, false);
-		this._right = new Node(Math.ceil(this.value / 2), this, true);
+		this._left = new Node(Math.floor(this.value / 2), this);
+		this._right = new Node(Math.ceil(this.value / 2), this);
 		this._value = undefined;
 		return true;
 	}
@@ -120,19 +120,13 @@ class Node {
 
 export function execute(input_data) {
 	var input = input_data.split('\n').map(t => new Node(JSON.parse(t)));
-	var max = [];
-	for (var i = 0; i < input.length; i++) {
-		for (var j = 0; j < input.length; j++) {
-			if (i !== j) {
-				var t1 = new Node(input[i].toArray());
-				var t2 = new Node(input[j].toArray());
-				var r = t1.concat(t2).reduce().magnitude;
-				if (r > max) max = r;
-			}
-		}
-	}
 	return [
-		input.slice(1).reduce((a, b) => a.concat(b).reduce(), input[0]).magnitude,
-		max
+		input.slice(1).reduce((a, b) => a.concat(new Node(b.toArray())).reduce(), new Node(input[0].toArray())).magnitude,
+		Math.max(...input.flatMap(a => input.map(b => {
+			if (a === b) return 0;
+			return new Node(a.toArray())
+				.concat(new Node(b.toArray()))
+				.reduce().magnitude;
+		})))
 	];
 }

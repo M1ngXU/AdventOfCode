@@ -7,7 +7,7 @@ const EXERCISE = 'Exercise/';
 const EXAMPLE = 'Example/';
 
 const year = 2021;
-const day = '04';
+const day = '18';
 const result = 1924;
 
 (async () => {
